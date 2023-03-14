@@ -15,5 +15,5 @@ public class StudentBook {
     private LocalDateTime createdDate;
     private Status status;
     private LocalDateTime returnedDate;
-    private String duration;
+    private Integer duration;
 }
