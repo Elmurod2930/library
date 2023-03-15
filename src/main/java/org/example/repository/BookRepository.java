@@ -37,4 +37,16 @@ public class BookRepository {
         List<StudentBook> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(StudentBook.class));
         return list;
     }
+
+    public int addBook(Book book) {
+        String sql = "INSERT INTO books(title,author,amount,visible) values('%s','%s','%d','%b')";
+        sql = String.format(sql, book.getTitle(), book.getAuthor(), book.getAmount(), book.getVisible());
+        return jdbcTemplate.update(sql);
+    }
+
+    public int deleteBook(Integer id) {
+        String sql="update books set visible = false where id = '%d'";
+        sql=String.format(sql,id);
+        return jdbcTemplate.update(sql);
+    }
 }

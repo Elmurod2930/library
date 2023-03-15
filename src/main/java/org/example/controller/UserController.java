@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.service.BookService;
 import org.example.service.UserService;
 import org.example.util.Container;
 import org.example.util.ScannerUtil;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private BookService bookService;
 
     public void userMenu() {
         boolean b = true;
@@ -22,7 +25,7 @@ public class UserController {
             int action = ScannerUtil.IntScanner.nextByte();
             switch (action) {
                 case 0:
-                    b=false;
+                    b = false;
                     break;
                 case 1:
                     bookList();
@@ -58,7 +61,9 @@ public class UserController {
     }
 
     public void returnBook() {
-
+        System.out.print("Enter book id: ");
+        Integer id = ScannerUtil.IntScanner.nextInt();
+        bookService.returnBook(id);
     }
 
     public void history() {

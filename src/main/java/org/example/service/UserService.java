@@ -1,8 +1,10 @@
 package org.example.service;
 
+import org.example.controller.AdminController;
 import org.example.controller.UserController;
 import org.example.dto.Book;
 import org.example.dto.Student;
+import org.example.enums.StudentStatus;
 import org.example.repository.BookRepository;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +20,15 @@ public class UserService {
     private UserController userController;
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private AdminController adminController;
 
-    public void login(String next) {
-        Student student = userRepository.getByPhoneNumber(next);
+    public void login(String phone) {
+        Student student = userRepository.getByPhoneNumber(phone);
         if (student == null) {
             System.out.print("not fount student");
         }
-        userController.userMenu();
+        adminController.adminMenu();
     }
 
     public void bookList() {
@@ -47,5 +51,25 @@ public class UserService {
 
     public void takenBook() {
         bookRepository.takenBook().forEach(System.out::println);
+    }
+
+    public void studentList() {
+        userRepository.studentlist().forEach(System.out::println);
+    }
+
+    public void addStudent(Student student) {
+        Student studentObj = userRepository.getByPhoneNumber(student.getPhone());
+        if (studentObj != null) {
+            System.out.print(userRepository.changeVisible(studentObj.getId()));
+        }
+        System.out.print(userRepository.addStudent(student));
+    }
+
+    public void deleteStudent(Integer id) {
+        Student student=userRepository.getById(id);
+        if (student==null){
+            System.out.printf("not fount student");
+        }
+        System.out.println(userRepository.deleteStudent(id));
     }
 }
