@@ -37,10 +37,13 @@ public class UserController {
                     takenBook();
                     break;
                 case 4:
+                    returnBook();
                     break;
                 case 5:
+                    history();
                     break;
                 case 6:
+                    orderBook();
                     break;
             }
         }
@@ -67,11 +70,13 @@ public class UserController {
     }
 
     public void history() {
-
+        userService.history();
     }
 
     public void orderBook() {
-
+        System.out.print("Enter title: ");
+        String title = ScannerUtil.StringScanner.next();
+        bookService.orderBook(title);
     }
 
 }

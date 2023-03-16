@@ -6,7 +6,9 @@ import org.example.dto.Book;
 import org.example.dto.Student;
 import org.example.enums.StudentStatus;
 import org.example.repository.BookRepository;
+import org.example.repository.StudentBookRepository;
 import org.example.repository.UserRepository;
+import org.example.util.Container;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +24,17 @@ public class UserService {
     private BookRepository bookRepository;
     @Autowired
     private AdminController adminController;
+    @Autowired
+    private StudentBookRepository studentBookRepository;
 
     public void login(String phone) {
         Student student = userRepository.getByPhoneNumber(phone);
+        Container.student = student;
         if (student == null) {
             System.out.print("not fount student");
         }
-        adminController.adminMenu();
+//        adminController.adminMenu();
+        userController.userMenu();
     }
 
     public void bookList() {
@@ -42,10 +48,10 @@ public class UserService {
             System.out.println("bunaqa kitob qolmagan");
             return;
         }
-        if (bookRepository.takenBook().size() > 4) {
-            System.out.println("5 tadan ortiq kitob olish mumkin emas");
-            return;
-        }
+//        if (bookRepository.takenBook().size() > 4) {
+//            System.out.println("5 tadan ortiq kitob olish mumkin emas");
+//            return;
+//        }
         System.out.println(bookRepository.takeBook(book));
     }
 
@@ -66,10 +72,14 @@ public class UserService {
     }
 
     public void deleteStudent(Integer id) {
-        Student student=userRepository.getById(id);
-        if (student==null){
+        Student student = userRepository.getById(id);
+        if (student == null) {
             System.out.printf("not fount student");
         }
         System.out.println(userRepository.deleteStudent(id));
+    }
+
+    public void history() {
+        studentBookRepository.getStudentBookInfoList().forEach(System.out::println);
     }
 }

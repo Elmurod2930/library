@@ -33,7 +33,7 @@ public class BookRepository {
     }
 
     public List<StudentBook> takenBook() {
-        String sql = String.format("select * from studentBook where student_id ='%d'", Container.student.getId());
+        String sql = String.format("select * from studentBook where student_id = ",Container.student.getId());
         List<StudentBook> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(StudentBook.class));
         return list;
     }

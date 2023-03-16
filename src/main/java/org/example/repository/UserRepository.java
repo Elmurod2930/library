@@ -25,7 +25,7 @@ public class UserRepository {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
 //        Student student = (Student) jdbcTemplate.queryForList(sql, Student.class);
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 Student student = new Student();
                 student.setId(resultSet.getInt("id"));
                 student.setPhone(resultSet.getString("phone"));
@@ -34,6 +34,7 @@ public class UserRepository {
                 student.setVisible(resultSet.getBoolean("visible"));
                 return student;
             }
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

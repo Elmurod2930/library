@@ -34,4 +34,8 @@ public class BookService {
     public void returnBook(Integer id) {
         System.out.println(bookRepository.getByBookId(id).get(0));
     }
+
+    public void orderBook(String title) {
+
+    }
 }
